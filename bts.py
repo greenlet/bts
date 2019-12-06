@@ -312,24 +312,42 @@ class BtsModel(object):
             self.depth_8x8 = depth_8x8_scaled
 
             print("==================================")
-            print(" upconv5 in/out: {} / {}".format(dense_features.shape[-1], upconv5.shape[-1]))
-            print("  iconv5 in/out: {} / {}".format(concat5.shape[-1], iconv5.shape[-1]))
-            print(" upconv4 in/out: {} / {}".format(iconv5.shape[-1], upconv4.shape[-1]))
-            print("  iconv4 in/out: {} / {}".format(concat4.shape[-1], iconv4.shape[-1]))
-            print("    aspp in/out: {} / {}".format(concat4_daspp.shape[-1], daspp_feat.shape[-1]))
-            print("reduc8x8 in/out: {} / {}".format(daspp_feat.shape[-1], rconv1_8x8.shape[-1]))
-            print("  lpg8x8 in/out: {} / {}".format(plane_eq_8x8.shape[-1], 1))
-            print(" upconv3 in/out: {} / {}".format(daspp_feat.shape[-1], upconv3.shape[-1]))
-            print("  iconv3 in/out: {} / {}".format(concat3.shape[-1], iconv3.shape[-1]))
-            print("reduc4x4 in/out: {} / {}".format(iconv3.shape[-1], rconv1_4x4.shape[-1]))
-            print("  lpg4x4 in/out: {} / {}".format(plane_eq_4x4.shape[-1], 1))
-            print(" upconv2 in/out: {} / {}".format(iconv3.shape[-1], upconv2.shape[-1]))
-            print("  iconv2 in/out: {} / {}".format(concat2.shape[-1], iconv2.shape[-1]))
-            print("reduc2x2 in/out: {} / {}".format(iconv2.shape[-1], rconv1_2x2.shape[-1]))
-            print("  lpg2x2 in/out: {} / {}".format(plane_eq_2x2.shape[-1], 1))
-            print(" upconv1 in/out: {} / {}".format(iconv2.shape[-1], upconv1.shape[-1]))
-            print("  iconv1 in/out: {} / {}".format(concat1.shape[-1], iconv1.shape[-1]))
-            print("   depth in/out: {} / {}".format(iconv1.shape[-1], self.depth_est.shape[-1]))
+            print(" upconv5 in/out: {} / {}".format(dense_features.shape, upconv5.shape))
+            print("  iconv5 in/out: {} / {}".format(concat5.shape, iconv5.shape))
+            print(" upconv4 in/out: {} / {}".format(iconv5.shape, upconv4.shape))
+            print("  iconv4 in/out: {} / {}".format(concat4.shape, iconv4.shape))
+            print("    aspp in/out: {} / {}".format(concat4_daspp.shape, daspp_feat.shape))
+            print("reduc8x8 in/out: {} / {}".format(daspp_feat.shape, rconv1_8x8.shape))
+            print("  lpg8x8 in/out: {} / {}".format(plane_eq_8x8.shape, 1))
+            print(" upconv3 in/out: {} / {}".format(daspp_feat.shape, upconv3.shape))
+            print("  iconv3 in/out: {} / {}".format(concat3.shape, iconv3.shape))
+            print("reduc4x4 in/out: {} / {}".format(iconv3.shape, rconv1_4x4.shape))
+            print("  lpg4x4 in/out: {} / {}".format(plane_eq_4x4.shape, 1))
+            print(" upconv2 in/out: {} / {}".format(iconv3.shape, upconv2.shape))
+            print("  iconv2 in/out: {} / {}".format(concat2.shape, iconv2.shape))
+            print("reduc2x2 in/out: {} / {}".format(iconv2.shape, rconv1_2x2.shape))
+            print("  lpg2x2 in/out: {} / {}".format(plane_eq_2x2.shape, 1))
+            print(" upconv1 in/out: {} / {}".format(iconv2.shape, upconv1.shape))
+            print("  iconv1 in/out: {} / {}".format(concat1.shape, iconv1.shape))
+            print("   depth in/out: {} / {}".format(iconv1.shape, self.depth_est.shape))
+            # print(" upconv5 in/out: {} / {}".format(dense_features.shape[-1], upconv5.shape[-1]))
+            # print("  iconv5 in/out: {} / {}".format(concat5.shape[-1], iconv5.shape[-1]))
+            # print(" upconv4 in/out: {} / {}".format(iconv5.shape[-1], upconv4.shape[-1]))
+            # print("  iconv4 in/out: {} / {}".format(concat4.shape[-1], iconv4.shape[-1]))
+            # print("    aspp in/out: {} / {}".format(concat4_daspp.shape[-1], daspp_feat.shape[-1]))
+            # print("reduc8x8 in/out: {} / {}".format(daspp_feat.shape[-1], rconv1_8x8.shape[-1]))
+            # print("  lpg8x8 in/out: {} / {}".format(plane_eq_8x8.shape[-1], 1))
+            # print(" upconv3 in/out: {} / {}".format(daspp_feat.shape[-1], upconv3.shape[-1]))
+            # print("  iconv3 in/out: {} / {}".format(concat3.shape[-1], iconv3.shape[-1]))
+            # print("reduc4x4 in/out: {} / {}".format(iconv3.shape[-1], rconv1_4x4.shape[-1]))
+            # print("  lpg4x4 in/out: {} / {}".format(plane_eq_4x4.shape[-1], 1))
+            # print(" upconv2 in/out: {} / {}".format(iconv3.shape[-1], upconv2.shape[-1]))
+            # print("  iconv2 in/out: {} / {}".format(concat2.shape[-1], iconv2.shape[-1]))
+            # print("reduc2x2 in/out: {} / {}".format(iconv2.shape[-1], rconv1_2x2.shape[-1]))
+            # print("  lpg2x2 in/out: {} / {}".format(plane_eq_2x2.shape[-1], 1))
+            # print(" upconv1 in/out: {} / {}".format(iconv2.shape[-1], upconv1.shape[-1]))
+            # print("  iconv1 in/out: {} / {}".format(concat1.shape[-1], iconv1.shape[-1]))
+            # print("   depth in/out: {} / {}".format(iconv1.shape[-1], self.depth_est.shape[-1]))
             print("==================================")
 
     def build_densenet121_bts(self, net_input, reuse):
@@ -368,6 +386,8 @@ class BtsModel(object):
 
             if self.params.dataset == 'nyu':
                 self.mask = self.depth_gt > 0.1
+            elif self.params.dataset == 'tra':
+                self.mask = self.depth_gt > 0.1
             else:
                 self.mask = self.depth_gt > 1.0
 
@@ -380,7 +400,7 @@ class BtsModel(object):
             self.total_loss = self.silog_loss
 
     def build_summaries(self):
-        with tf.device('/cpu:0'):
+        with tf.device('/gpu:0'):
             tf.summary.scalar('silog_loss', self.silog_loss, collections=self.model_collection)
 
             depth_gt = tf.where(self.depth_gt < 1e-3, self.depth_gt * 0 + 1e3, self.depth_gt)

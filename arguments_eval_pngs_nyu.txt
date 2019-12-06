@@ -1,0 +1,6 @@
+
+--min_depth_eval 0.001
+--max_depth_eval 10
+--dataset nyu
+--pred_path /home/burakov/prog/depth/bts/result_bts_tra_1
+

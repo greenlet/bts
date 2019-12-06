@@ -1,0 +1,7 @@
+--model_name bts_nyu_1
+--checkpoint_path ./models/bts_nyu_1/
+--data_path /home/burakov/Alpha/Data/nyu_depth_v2/nyu_depth_v2_labeled_vis/test/
+--gt_path /home/burakov/Alpha/Data/nyu_depth_v2/nyu_depth_v2_labeled_vis/test/
+--filenames_file ./train_test_inputs/nyudepthv2_test_files_with_gt.txt
+--dataset nyu
+--eigen_crop

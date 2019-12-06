@@ -61,6 +61,7 @@ else:
 
 model_dir = os.path.dirname(args.checkpoint_path)
 sys.path.append(model_dir)
+sys.path.append('./models/bts_tra_1')
 
 for key, val in vars(__import__(args.model_name)).items():
     if key.startswith('__') and key.endswith('__'):
@@ -83,11 +84,16 @@ def test(params):
     dataloader_iter = dataloader.loader.make_initializable_iterator()
     iter_init_op = dataloader_iter.initializer
     image, focal = dataloader_iter.get_next()
+    print(image.get_shape().as_list())
 
     model = BtsModel(params, 'test', image, None, focal=focal, bn_training=False)
 
     # SESSION
-    config = tf.ConfigProto(allow_soft_placement=True)
+    gpu_options = tf.GPUOptions(allow_growth=True)
+    config = tf.ConfigProto(
+        allow_soft_placement=True,
+        gpu_options=gpu_options,
+    )
     sess = tf.Session(config=config)
 
     # INIT
@@ -99,7 +105,7 @@ def test(params):
     # SAVER
     train_saver = tf.train.Saver()
     
-    with tf.device('/cpu:0'):
+    with tf.device('/GPU:0'):
         restore_path = args.checkpoint_path
 
         # RESTORE
@@ -153,6 +159,11 @@ def test(params):
                 filename_png = save_name + '/raw/' + lines[s].split()[0].split('/')[-1].replace('.jpg', '.png')
                 filename_cmap_png = save_name + '/cmap/' + lines[s].split()[0].split('/')[-1].replace('.jpg', '.png')
                 filename_image_png = save_name + '/rgb/' + lines[s].split()[0].split('/')[-1]
+            elif args.dataset == 'tra':
+                fname = lines[s].split()[0]
+                filename_png = save_name + '/raw/' + fname
+                filename_cmap_png = save_name + '/cmap/' + fname
+                filename_image_png = save_name + '/rgb/' + fname
             else:
                 scene_name = lines[s].split()[0].split('/')[0]
                 filename_png = save_name + '/raw/' + scene_name + '_' + lines[s].split()[0].split('/')[1].replace('.jpg', '.png')

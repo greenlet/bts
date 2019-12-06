@@ -125,7 +125,7 @@ def build_tensors_in_checkpoint_file(loaded_tensors):
 
 def train(params):
 
-    with tf.Graph().as_default(), tf.device('/cpu:0'):
+    with tf.Graph().as_default(), tf.device('/gpu:0'):
 
         global_step = tf.Variable(0, trainable=False)
 
@@ -202,7 +202,7 @@ def train(params):
         sess = tf.Session(config=config)
 
         summary_writer = tf.summary.FileWriter(args.log_directory + '/' + args.model_name, sess.graph)
-        train_saver = tf.train.Saver(max_to_keep=200)
+        train_saver = tf.train.Saver(max_to_keep=5)
 
         total_num_parameters = 0
         for variable in tf.trainable_variables():
@@ -215,15 +215,19 @@ def train(params):
 
         coordinator = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=sess, coord=coordinator)
-        
+
+        print('1. global_step', sess.run(global_step))
         if args.pretrained_model != '':
+            print('--> Loading pretrained model from', args.pretrained_model)
             vars_to_restore = get_tensors_in_checkpoint_file(file_name=args.pretrained_model)
             tensors_to_load = build_tensors_in_checkpoint_file(vars_to_restore)
             loader = tf.train.Saver(tensors_to_load)
             loader.restore(sess, args.pretrained_model)
 
+        print('2. global_step', sess.run(global_step))
         # Load checkpoint if set
         if args.checkpoint_path != '':
+            print('--> Loading checkpoint from', args.checkpoint_path)
             restore_path = args.checkpoint_path
             train_saver.restore(sess, restore_path)
 
@@ -259,7 +263,7 @@ def train(params):
                 summary_writer.add_summary(summary_str, global_step=step)
                 summary_writer.flush()
                 
-            if step and step % 500 == 0:
+            if step and step % 5000 == 0:
                 train_saver.save(sess, args.log_directory + '/' + args.model_name + '/model', global_step=step)
 
         train_saver.save(sess, args.log_directory + '/' + args.model_name + '/model', global_step=num_total_steps)
@@ -301,7 +305,9 @@ def main(_):
             model_out_path = args.log_directory + '/' + args.model_name + '/' + model_filename
             command = 'cp ' + loaded_model_dir + '/' + loaded_model_filename + ' ' + model_out_path
             os.system(command)
-        
+
+        print('args', args)
+        print('params', params)
         train(params)
         
     elif args.mode == 'test':

@@ -1,0 +1,21 @@
+--mode train
+--model_name bts_tra_2
+--encoder densenet161_bts
+--dataset tra
+--data_path /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/data/
+--gt_path /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/data/
+--filenames_file /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/train.txt
+--batch_size 3
+--num_epochs 200
+--learning_rate 1e-4
+--num_gpus 1
+--num_threads 1
+--input_height 320
+--input_width 480
+--max_depth 17
+--do_random_rotate
+--degree 7.5
+--log_directory ./models/
+--checkpoint_path ./models/bts_tra_2/model-15000
+--fix_first_conv_blocks
+

@@ -1,0 +1,8 @@
+--model_name bts_tra_2
+--checkpoint_path ./models/bts_tra_2/
+--data_path /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/data/
+--gt_path /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/data/
+--filenames_file /home/burakov/Alpha/Data/Arrival/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/test.txt
+--dataset tra
+--eigen_crop
+

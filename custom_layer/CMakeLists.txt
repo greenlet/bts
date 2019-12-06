@@ -44,12 +44,14 @@ string(REPLACE "]" "" TF_LINK_FLAGS "${TF_LINK_FLAGS}")
 string(REPLACE "'" "" TF_LINK_FLAGS "${TF_LINK_FLAGS}")
 string(REPLACE "," "" TF_LINK_FLAGS "${TF_LINK_FLAGS}")
 
+
 message("TF_INC: ${TF_INC}")
 message("TF_LIB: ${TF_LIB}")
 message("TF_COMPILE_FLAGS: ${TF_COMPILE_FLAGS}")
 message("TF_LINK_FLAGS: ${TF_LINK_FLAGS}")
 
 find_package(CUDA)
+#find_package(Protobuf REQUIRED)
 
 set(TF_NSYNC_INC "${TF_INC}/external/nsync/public/")
 message(${TF_NSYNC_INC})

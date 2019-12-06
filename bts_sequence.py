@@ -94,7 +94,7 @@ def test_sequence(params):
     # SAVER
     train_saver = tf.train.Saver()
 
-    with tf.device('/cpu:0'):
+    with tf.device('/gpu:0'):
         restore_path = args.checkpoint_path
 
         # RESTORE

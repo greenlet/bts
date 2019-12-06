@@ -106,6 +106,7 @@ def test(params):
     gt_depths = []
     is_missing = []
     missing_ids = set()
+    print('args:', args)
 
     write_summary = False
 
@@ -174,7 +175,7 @@ def test(params):
     # SAVER
     train_saver = tf.train.Saver()
     
-    with tf.device('/cpu:0'):
+    with tf.device('/gpu:0'):
         for step in steps:
             
             if os.path.exists(args.checkpoint_path + '.meta'):
@@ -214,6 +215,8 @@ def test(params):
                         continue
 
                     if args.dataset == 'nyu':
+                        depth = depth.astype(np.float32) / 1000.0
+                    elif args.dataset == 'tra':
                         depth = depth.astype(np.float32) / 1000.0
                     else:
                         depth = depth.astype(np.float32) / 256.0
@@ -297,6 +300,10 @@ def eval(pred_depths, step):
                 eval_mask[int(0.3324324 * gt_height):int(0.91351351 * gt_height), int(0.0359477 * gt_width):int(0.96405229 * gt_width)] = 1
 
             valid_mask = np.logical_and(valid_mask, eval_mask)
+
+        pred_depth = pred_depth * (gt_depth.max() / pred_depth.max())
+        # print('gt', gt_depth.min(), gt_depth.mean(), gt_depth.max())
+        # print('pred', pred_depth.min(), pred_depth.mean(), pred_depth.max())
 
         silog[i], log10[i], abs_rel[i], sq_rel[i], rms[i], log_rms[i], d1[i], d2[i], d3[i] = compute_errors(gt_depth[valid_mask], pred_depth[valid_mask])
 

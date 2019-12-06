@@ -21,6 +21,7 @@ import argparse
 import fnmatch
 import cv2
 import numpy as np
+import sys
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -44,7 +45,12 @@ parser.add_argument('--min_depth_eval',      type=float, help='minimum depth for
 parser.add_argument('--max_depth_eval',      type=float, help='maximum depth for evaluation', default=80)
 parser.add_argument('--do_kb_crop',                      help='if set, crop input images as kitti benchmark images', action='store_true')
 
-args = parser.parse_args()
+if sys.argv.__len__() == 2:
+    arg_filename_with_prefix = '@' + sys.argv[1]
+    args = parser.parse_args([arg_filename_with_prefix])
+else:
+    args = parser.parse_args()
+
 
 
 def compute_errors(gt, pred):
@@ -78,6 +84,7 @@ def test():
     pred_filenames = []
 
     for root, dirnames, filenames in os.walk(args.pred_path):
+        # print(root, dirnames, filenames)
         for pred_filename in fnmatch.filter(filenames, '*.png'):
             if 'cmap' in pred_filename or 'gt' in pred_filename:
                 continue
@@ -97,6 +104,8 @@ def test():
             continue
 
         if args.dataset == 'nyu':
+            pred_depth = pred_depth.astype(np.float32) / 1000.0
+        elif args.dataset == 'tra':
             pred_depth = pred_depth.astype(np.float32) / 1000.0
         else:
             pred_depth = pred_depth.astype(np.float32) / 256.0

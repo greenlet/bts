@@ -1,5 +1,5 @@
 --encoder densenet161_bts
---data_path ../dataset/nyu_depth_v2/official_splits/test/
+--data_path /home/burakov/Alpha/Data/nyu_depth_v2/nyu_depth_v2_labeled_vis/test/
 --dataset nyu
 --filenames_file ./train_test_inputs/nyudepthv2_test_files_with_gt.txt
 --model_name bts_nyu

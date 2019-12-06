@@ -103,6 +103,8 @@ class BtsDataloader(object):
 
         if self.params.dataset == 'nyu':
             depth_gt = tf.cast(depth_gt, tf.float32) / 1000.0
+        elif self.params.dataset == 'tra':
+            depth_gt = tf.cast(depth_gt, tf.float32) / 1000.0
         else:
             depth_gt = tf.cast(depth_gt, tf.float32) / 256.0
 
@@ -113,6 +115,7 @@ class BtsDataloader(object):
         if self.params.dataset == 'nyu':
             depth_gt = depth_gt[45:472, 43:608, :]
             image = image[45:472, 43:608, :]
+
 
         if self.do_kb_crop is True:
             print('Cropping training images as kitti benchmark images')

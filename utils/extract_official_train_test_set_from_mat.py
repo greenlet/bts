@@ -40,6 +40,11 @@ import scipy.io
 import sys
 import cv2
 
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 
 def convert_image(i, scene, depth_raw, image):
 

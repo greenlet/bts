@@ -1,0 +1,5 @@
+--min_depth_eval 0.001
+--max_depth_eval 17
+--dataset tra
+--pred_path ./results_bts_tra_1
+
