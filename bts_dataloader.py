@@ -39,8 +39,11 @@ class BtsDataloader(object):
             filenames = f.readlines()
 
         if mode == 'train':
-            assert not self.params.batch_size % self.params.num_gpus
-            mini_batch_size = int(self.params.batch_size / self.params.num_gpus)
+            if self.params.minibatch_size:
+                mini_batch_size = params.minibatch_size
+            else:
+                assert not self.params.batch_size % self.params.num_gpus
+                mini_batch_size = int(self.params.batch_size / self.params.num_gpus)
 
             self.loader = tf.data.Dataset.from_tensor_slices(filenames)
             self.loader = self.loader.apply(tf.contrib.data.shuffle_and_repeat(len(filenames)))
@@ -75,6 +78,13 @@ class BtsDataloader(object):
             top_margin = tf.to_int32(height - 352)
             left_margin = tf.to_int32((width - 1216) / 2)
             image = image[top_margin:top_margin + 352, left_margin:left_margin + 1216, :]
+
+        height, width = tf.shape(image)[0], tf.shape(image)[1]
+        # scale = tf.minimum(height / self.params.height, width / self.params.width)
+        scale = 2
+        height_crop, width_crop = tf.to_int32(self.params.height * scale), tf.to_int32(self.params.width * scale)
+        top_offset, left_offset = (height - height_crop) // 2, (width - width_crop) // 2
+        image = image[top_offset:top_offset + height_crop, left_offset:left_offset + width_crop]
 
         return image, focal
 

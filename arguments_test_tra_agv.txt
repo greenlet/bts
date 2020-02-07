@@ -1,0 +1,10 @@
+--encoder densenet161_bts
+--data_path /media/burakov/HardDrive/Data/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/data/
+--dataset tra
+--filenames_file /media/burakov/HardDrive/Data/CORNER_NODE_LH_1000093_E_CORNER_NODE_RH_1000094_D_on_agv_000500/bts/test.txt
+--model_name bts_tra_2
+--checkpoint_path ./models/bts_tra_3/model-18800
+--input_height 480
+--input_width 640
+--max_depth 17
+--result_postfix agv

@@ -1,0 +1,23 @@
+--mode train
+--model_name bts_tra_3
+--encoder densenet161_bts
+--dataset tra
+--data_path /home/burakov/Alpha/Data/2Parts_assembling_left_000500/bts/data/
+--gt_path /home/burakov/Alpha/Data/2Parts_assembling_left_000500/bts/data/
+--filenames_file /home/burakov/Alpha/Data/2Parts_assembling_left_000500/bts/meta.txt
+--num_minibatches 4
+--minibatch_size 2
+--num_epochs 100
+--learning_rate 1e-4
+--num_threads 1
+--input_height 480
+--input_width 640
+--max_depth 17
+--do_random_rotate
+--degree 7.5
+--log_directory ./models/
+--pretrained_model ./models/bts_nyu/model
+--retrain
+--fix_first_conv_blocks
+
+

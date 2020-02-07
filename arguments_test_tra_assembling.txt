@@ -1,0 +1,11 @@
+--encoder densenet161_bts
+--data_path /media/burakov/HardDrive/Data/2Parts_assembling_left_001000/bts/data/
+--dataset tra
+--filenames_file /media/burakov/HardDrive/Data/2Parts_assembling_left_001000/bts/test.txt
+--model_name bts_tra_2
+--checkpoint_path ./models/bts_tra_2/model-93400
+--input_height 480
+--input_width 640
+--max_depth 17
+--result_postfix assembling
+

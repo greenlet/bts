@@ -51,7 +51,13 @@ message("TF_COMPILE_FLAGS: ${TF_COMPILE_FLAGS}")
 message("TF_LINK_FLAGS: ${TF_LINK_FLAGS}")
 
 find_package(CUDA)
-#find_package(Protobuf REQUIRED)
+set(Protobuf_INCLUDE_DIR /home/burakov/miniconda3/pkgs/libprotobuf-3.7.1-hd408876_0/include)
+#set(Protobuf_LIBRARY_DIR /home/burakov/miniconda3/pkgs/libprotobuf-3.7.1-hd408876_0/lib)
+set(Protobuf_LIBRARIES /home/burakov/miniconda3/pkgs/libprotobuf-3.7.1-hd408876_0/lib)
+set(Protobuf_PROTOC_LIBRARIES /home/burakov/miniconda3/pkgs/libprotobuf-3.7.1-hd408876_0/lib)
+
+
+find_package(Protobuf REQUIRED)
 
 set(TF_NSYNC_INC "${TF_INC}/external/nsync/public/")
 message(${TF_NSYNC_INC})

@@ -52,6 +52,7 @@ parser.add_argument('--max_depth',           type=float, help='maximum depth in 
 parser.add_argument('--checkpoint_path',     type=str,   help='path to a specific checkpoint to load', default='')
 parser.add_argument('--dataset',             type=str,   help='dataset to train on, make3d or nyudepthv2', default='nyu')
 parser.add_argument('--do_kb_crop',                      help='if set, crop input images as kitti benchmark images', action='store_true')
+parser.add_argument('--result_postfix',      type=str,   help='result directory name postfix', default='')
 
 if sys.argv.__len__() == 2:
     arg_filename_with_prefix = '@' + sys.argv[1]
@@ -78,7 +79,7 @@ def get_num_lines(file_path):
 
 def test(params):
     """Test function."""
-    
+
     dataloader = BtsDataloader(args.data_path, None, args.filenames_file, params, 'test', do_kb_crop=args.do_kb_crop)
 
     dataloader_iter = dataloader.loader.make_initializable_iterator()
@@ -136,9 +137,9 @@ def test(params):
 
         print('Done.')
 
-        save_name = 'result_' + args.model_name
+        save_name = 'result_' + args.model_name + '_' + args.result_postfix
 
-        print('Saving result pngs..')
+        print('Saving result pngs to', save_name)
         if not os.path.exists(os.path.dirname(save_name)):
             try:
                 os.mkdir(save_name)
@@ -204,12 +205,12 @@ def test(params):
                 plt.imsave(filename_lpg_cmap_png, np.log10(pred_2x2_cropped), cmap='Greys')
             else:
                 plt.imsave(filename_cmap_png, np.log10(pred_depth), cmap='Greys')
-                filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_8x8.png')
-                plt.imsave(filename_lpg_cmap_png, np.log10(pred_8x8), cmap='Greys')
-                filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_4x4.png')
-                plt.imsave(filename_lpg_cmap_png, np.log10(pred_4x4), cmap='Greys')
-                filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_2x2.png')
-                plt.imsave(filename_lpg_cmap_png, np.log10(pred_2x2), cmap='Greys')
+                # filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_8x8.png')
+                # plt.imsave(filename_lpg_cmap_png, np.log10(pred_8x8), cmap='Greys')
+                # filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_4x4.png')
+                # plt.imsave(filename_lpg_cmap_png, np.log10(pred_4x4), cmap='Greys')
+                # filename_lpg_cmap_png = filename_cmap_png.replace('.png', '_2x2.png')
+                # plt.imsave(filename_lpg_cmap_png, np.log10(pred_2x2), cmap='Greys')
 
         return
 
